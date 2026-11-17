@@ -2,14 +2,7 @@
  * requireAdmin — verifies Supabase JWT + admin role.
  * Usage: router.post("/", requireAdmin, handler);
  */
-import { createClient } from "@supabase/supabase-js";
-import dotenv from "dotenv";
-dotenv.config();
-
-const supabase = createClient(
-  process.env.SUPABASE_URL         || "",
-  process.env.SUPABASE_SERVICE_KEY || ""
-);
+import { supabase } from "../lib/supabase.js";
 
 export default async function requireAdmin(req, res, next) {
   const token = (req.headers.authorization || "").replace("Bearer ", "").trim();

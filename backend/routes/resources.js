@@ -2,15 +2,8 @@
  * /api/resources — thin proxy over Supabase for server-side mutations.
  * Expand with validation, rate-limiting, caching, etc. as you learn Express.
  */
-import { Router }       from "express";
-import { createClient } from "@supabase/supabase-js";
-import dotenv           from "dotenv";
-dotenv.config();
-
-const supabase = createClient(
-  process.env.SUPABASE_URL         || "",
-  process.env.SUPABASE_SERVICE_KEY || ""
-);
+import { Router }   from "express";
+import { supabase } from "../lib/supabase.js";
 const router = Router();
 
 // GET /api/resources?branch=AIDS&semester=V

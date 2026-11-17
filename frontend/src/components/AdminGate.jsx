@@ -17,9 +17,30 @@ export default function AdminGate() {
     toast.success("Admin access granted.");
   }, [email, password, login]);
 
+  const closeGate = useCallback(() => {
+    document.getElementById("adminGate")?.classList.remove("open");
+  }, []);
+
   return (
-    <div id="adminGate" className="modal-overlay" role="dialog" aria-modal="true" aria-label="Admin login">
+    <div
+      id="adminGate"
+      className="modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Admin login"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) closeGate();
+      }}
+    >
       <div className="modal-box" style={{ maxWidth: 420 }}>
+        <button
+          type="button"
+          className="modal-close"
+          onClick={closeGate}
+          aria-label="Close admin login"
+        >
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
         <h2>Admin Login</h2>
         <form onSubmit={handleLogin} noValidate>
           <div className="form-row">

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { supabase } from "../lib/supabase";
+import { supabase, isSupabaseConfigured } from "../lib/supabase";
 
 export const useAdminStore = create((set) => ({
   adminSession: null,
@@ -7,6 +7,9 @@ export const useAdminStore = create((set) => ({
   loading: false,
 
   login: async (email, password) => {
+    if (!isSupabaseConfigured) {
+      return { success: false, message: "Database not configured." };
+    }
     try {
       set({ loading: true });
       const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -43,6 +46,10 @@ export const useAdminStore = create((set) => ({
   // checkAdmin silently no-ops when Supabase is unreachable / unconfigured.
   // ──────────────────────────────────────────────────────────────────────────
   checkAdmin: async () => {
+    if (!isSupabaseConfigured) {
+      set({ adminSession: null, adminEmail: null });
+      return;
+    }
     try {
       const { data } = await supabase.auth.getSession();
       const session = data?.session;

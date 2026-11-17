@@ -12,7 +12,13 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 // if (!supabaseUrl) throw new Error("VITE_SUPABASE_URL missing");
 // if (!supabaseAnonKey) throw new Error("VITE_SUPABASE_ANON_KEY missing");
 
+export const isSupabaseConfigured = Boolean(
+  supabaseUrl &&
+  supabaseAnonKey &&
+  !supabaseUrl.includes("placeholder")
+);
+
 export const supabase = createClient(
-  supabaseUrl  || "https://placeholder.supabase.co",
+  supabaseUrl || "https://placeholder.supabase.co",
   supabaseAnonKey || "placeholder-anon-key"
 );

@@ -39,10 +39,15 @@ export default function ResourceVault() {
     abortRef.current?.abort();
     abortRef.current = new AbortController();
     setLoadingRes(true); setLoadError("");
-    const result = await fetchAllResources({ branch: activeBranch, semester: activeSem });
-    if (result.success) { setSupaRes(result.data || {}); }
-    else { setLoadError(result.error || "Failed to load resources."); setSupaRes({}); }
-    setLoadingRes(false);
+    try {
+      const result = await fetchAllResources({ branch: activeBranch, semester: activeSem });
+      if (result.success) { setSupaRes(result.data || {}); }
+      else { setLoadError(result.error || "Failed to load resources."); setSupaRes({}); }
+    } catch (e) {
+      setSupaRes({});
+    } finally {
+      setLoadingRes(false);
+    }
   }, [activeBranch, activeSem]);
 
   useEffect(() => { loadResources(); return () => abortRef.current?.abort(); }, [loadResources]);

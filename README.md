@@ -34,3 +34,4 @@ npm run dev            # → http://localhost:4000
 ⚠️ **Supabase auth is temporarily disabled.**
 The site opens directly to the main page (guest mode).
 See `supabase/README.md` for re-enable instructions.
+# FINALAIDTIMES
